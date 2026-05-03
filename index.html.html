@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LandGuard AI – Smarter & Secure Land Verification</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a0f2e;
+    --deep: #060b20;
+    --gold: #f5a623;
+    --gold-light: #ffd07a;
+    --cyan: #00e5ff;
+    --green: #00c896;
+    --white: #f0f4ff;
+    --muted: #8892b0;
+    --card: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deep);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* BACKGROUND MESH */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(0,229,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(245,166,35,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(0,200,150,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 6%;
+    background: rgba(6,11,32,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 700 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 6% 4rem;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--cyan);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    max-width: 900px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .highlight {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.7;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), #e8940f);
+    color: var(--navy);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(245,166,35,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(245,166,35,0.4);
+  }
+
+  .btn-secondary {
+    background: var(--card);
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.07);
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+    padding: 2.5rem 6%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--gold);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 6%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* PROBLEM */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .problem-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .problem-card:hover {
+    border-color: rgba(245,166,35,0.3);
+    transform: translateY(-4px);
+  }
+
+  .problem-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .problem-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .problem-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* FEATURES */
+  .features-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  .feature-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .feature-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.2rem;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+
+  .feature-item:hover {
+    border-color: var(--border);
+    background: var(--card);
+  }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .fi-gold { background: rgba(245,166,35,0.15); }
+  .fi-cyan { background: rgba(0,229,255,0.1); }
+  .fi-green { background: rgba(0,200,150,0.1); }
+  .fi-purple { background: rgba(180,100,255,0.1); }
+
+  .feature-text h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .feature-text p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+  /* MOCK DASHBOARD */
+  .dashboard-mock {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dash-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .dash-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .d1 { background: #ff5f57; }
+  .d2 { background: #febc2e; }
+  .d3 { background: #28c840; }
+
+  .dash-title {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-left: 0.5rem;
+  }
+
+  .risk-score-box {
+    background: linear-gradient(135deg, rgba(245,166,35,0.15), rgba(245,166,35,0.05));
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .risk-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+
+  .risk-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--gold);
+  }
+
+  .risk-status {
+    display: inline-block;
+    background: rgba(0,200,150,0.15);
+    color: var(--green);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.3rem;
+  }
+
+  .dash-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .dash-pill {
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .dp-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .dp-value { font-size: 0.9rem; font-weight: 600; margin-top: 0.2rem; }
+  .dp-ok { color: var(--green); }
+  .dp-warn { color: var(--gold); }
+
+  .alert-box {
+    background: rgba(0,229,255,0.07);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.82rem;
+  }
+
+  .alert-dot {
+    width: 8px; height: 8px;
+    background: var(--cyan);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 1.5s infinite;
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+    position: relative;
+  }
+
+  .step-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    transition: transform 0.3s;
+  }
+
+  .step-card:hover { transform: translateY(-4px); }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(245,166,35,0.15);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .step-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+  /* SDG */
+  .sdg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .sdg-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color 0.3s;
+  }
+
+  .sdg-card:hover { border-color: rgba(0,200,150,0.3); }
+
+  .sdg-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--green);
+    flex-shrink: 0;
+  }
+
+  .sdg-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.5; margin-top: 0.2rem; }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .price-card:hover { transform: translateY(-4px); }
+
+  .price-card.featured {
+    border-color: rgba(245,166,35,0.4);
+    background: rgba(245,166,35,0.05);
+    position: relative;
+  }
+
+  .featured-tag {
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .price-tier {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--white);
+  }
+
+  .price-amount span { font-size: 1rem; color: var(--muted); font-weight: 400; }
+
+  .price-desc { color: var(--muted); font-size: 0.85rem; margin: 0.8rem 0 1.5rem; line-height: 1.6; }
+
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+
+  .price-features li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .price-features li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .price-btn {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+  }
+
+  .pb-outline {
+    border: 1px solid var(--border);
+    color: var(--white);
+  }
+
+  .pb-outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+
+  .pb-gold {
+    background: linear-gradient(135deg, var(--gold), #e8940f);
+    color: var(--navy);
+  }
+
+  .pb-gold:hover { box-shadow: 0 4px 20px rgba(245,166,35,0.4); }
+
+  /* CTA */
+  .cta-section {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 6rem 6%;
+    background: linear-gradient(135deg, rgba(245,166,35,0.08), rgba(0,229,255,0.05));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 1rem;
+  }
+
+  .cta-section p { color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .contact-info p { color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .contact-item-icon {
+    width: 36px; height: 36px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-input {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem 1.2rem;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-input::placeholder { color: var(--muted); }
+  .form-input:focus { border-color: rgba(245,166,35,0.4); }
+
+  textarea.form-input { resize: vertical; min-height: 120px; }
+
+  .form-submit {
+    background: linear-gradient(135deg, var(--gold), #e8940f);
+    color: var(--navy);
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .form-submit:hover {
+    box-shadow: 0 4px 20px rgba(245,166,35,0.4);
+    transform: translateY(-1px);
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2.5rem 6%;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer strong { color: var(--gold); font-family: 'Syne', sans-serif; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .features-layout { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    h1 { letter-spacing: -1px; }
+    .stats-bar { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Land<span>Guard</span> AI</div>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🛡️ AI-Powered Land Verification Platform</div>
+  <h1>Verify Land.<br><span class="highlight">Prevent Fraud.</span><br>Buy with Confidence.</h1>
+  <p class="hero-sub">LandGuard AI unifies land records, encumbrance data, and litigation status into one intelligent platform — protecting property buyers across India.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">🚀 Get Early Access</a>
+    <a href="#how" class="btn-secondary">See How It Works →</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">66%</div>
+    <div class="stat-label">Civil cases are land disputes</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">55M+</div>
+    <div class="stat-label">Pending cases in Indian courts</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">₹2Cr</div>
+    <div class="stat-label">Projected SOM in 2 years</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">USD 5B</div>
+    <div class="stat-label">India Land Tech Market (TAM)</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem" class="fade-in">
+  <div class="section-tag">The Problem</div>
+  <h2 class="section-title">Land Verification is Broken</h2>
+  <p class="section-sub">Property buyers in India must navigate multiple fragmented government portals just to verify one piece of land — leading to confusion, fraud, and financial loss.</p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-icon">🗂️</div>
+      <h3>Fragmented Data</h3>
+      <p>Land records, registration, and court cases are spread across TNREGINET, CLIP, STAR 3.0, and more — making verification complex and time-consuming.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">⚠️</div>
+      <h3>Risk of Fraud</h3>
+      <p>Buyers unknowingly purchase disputed properties due to lack of clear, unified information — resulting in financial loss and legal complications.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🌐</div>
+      <h3>Language Barriers</h3>
+      <p>Complex legal documents in English exclude rural citizens and first-time buyers who need guidance in their native language.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🔔</div>
+      <h3>No Real-Time Alerts</h3>
+      <p>Citizens receive no notification when a legal claim is filed on their property — leaving them unaware until serious damage is done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="fade-in">
+  <div class="section-tag">The Solution</div>
+  <h2 class="section-title">Everything You Need,<br>In One Platform</h2>
+  <div class="features-layout">
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feature-icon fi-gold">🤖</div>
+        <div class="feature-text">
+          <h4>AI Litigation Risk Score</h4>
+          <p>Our Random Forest & Naive Bayes models analyze historical dispute data to generate a Low / Medium / High risk score for any property instantly.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon fi-cyan">🔗</div>
+        <div class="feature-text">
+          <h4>Unified Portal Integration</h4>
+          <p>Integrates TNREGINET, CLIP, STAR 3.0, Bhu-Aadhaar/ULPIN, and DILRMP into a single seamless dashboard.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon fi-green">🔔</div>
+        <div class="feature-text">
+          <h4>Real-Time Dispute Alerts</h4>
+          <p>Receive instant notifications the moment any new legal claim or dispute is registered against your property.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon fi-purple">🗺️</div>
+        <div class="feature-text">
+          <h4>Visual Boundary Verification</h4>
+          <p>SVAMITVA/NAKSHA-powered drone mapping allows you to visually confirm exact land boundaries before purchase.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon fi-gold">🌐</div>
+        <div class="feature-text">
+          <h4>Multilingual Interface</h4>
+          <p>Fully available in Tamil and English — making land verification accessible to all citizens regardless of literacy level.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCK DASHBOARD -->
+    <div class="dashboard-mock">
+      <div class="dash-header">
+        <div class="dash-dot d1"></div>
+        <div class="dash-dot d2"></div>
+        <div class="dash-dot d3"></div>
+        <span class="dash-title">LandGuard AI — Property Dashboard</span>
+      </div>
+      <div class="risk-score-box">
+        <div class="risk-label">Litigation Risk Score</div>
+        <div class="risk-value">82/100</div>
+        <div class="risk-status">✓ LOW RISK</div>
+      </div>
+      <div class="dash-row">
+        <div class="dash-pill">
+          <div class="dp-label">Ownership</div>
+          <div class="dp-value dp-ok">✓ Verified</div>
+        </div>
+        <div class="dash-pill">
+          <div class="dp-label">Encumbrance</div>
+          <div class="dp-value dp-ok">✓ Clear</div>
+        </div>
+      </div>
+      <div class="dash-row">
+        <div class="dash-pill">
+          <div class="dp-label">Court Cases</div>
+          <div class="dp-value dp-ok">0 Pending</div>
+        </div>
+        <div class="dash-pill">
+          <div class="dp-label">Registration</div>
+          <div class="dp-value dp-warn">⚡ Check</div>
+        </div>
+      </div>
+      <div class="alert-box">
+        <div class="alert-dot"></div>
+        Real-time monitoring active — No disputes detected
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="fade-in">
+  <div class="section-tag">How It Works</div>
+  <h2 class="section-title">4 Simple Steps to Safe Land</h2>
+  <p class="section-sub">Verifying a property with LandGuard AI takes less than 2 minutes.</p>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <h3>Register & Login</h3>
+      <p>Create your secure account on the mobile or web app in under 60 seconds.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <h3>Enter Property Details</h3>
+      <p>Input the survey number, village name, or ULPIN/Bhu-Aadhaar of the land you want to verify.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <h3>Get AI Risk Score</h3>
+      <p>Receive an instant AI-generated litigation risk score along with ownership, encumbrance, and dispute status.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <h3>Stay Alerted</h3>
+      <p>Enable real-time alerts to get notified instantly if any new legal case or dispute is filed on the property.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SDG IMPACT -->
+<section class="fade-in">
+  <div class="section-tag">Social Impact</div>
+  <h2 class="section-title">Contributing to UN SDGs</h2>
+  <div class="sdg-grid">
+    <div class="sdg-card">
+      <div class="sdg-num">SDG 1</div>
+      <div>
+        <strong>No Poverty</strong>
+        <p>Securing land as a financial asset for vulnerable citizens</p>
+      </div>
+    </div>
+    <div class="sdg-card">
+      <div class="sdg-num">SDG 9</div>
+      <div>
+        <strong>Innovation</strong>
+        <p>Promoting AI-driven digital governance solutions</p>
+      </div>
+    </div>
+    <div class="sdg-card">
+      <div class="sdg-num">SDG 11</div>
+      <div>
+        <strong>Sustainable Cities</strong>
+        <p>Enabling transparent urban property transactions</p>
+      </div>
+    </div>
+    <div class="sdg-card">
+      <div class="sdg-num">SDG 16</div>
+      <div>
+        <strong>Justice</strong>
+        <p>Reducing court backlog and strengthening land governance</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="fade-in">
+  <div class="section-tag">Pricing</div>
+  <h2 class="section-title">Simple, Transparent Plans</h2>
+  <p class="section-sub">Start free, upgrade when you're ready.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Free</div>
+      <div class="price-amount">₹0 <span>/ forever</span></div>
+      <p class="price-desc">Perfect for first-time buyers who want to explore basic land verification.</p>
+      <ul class="price-features">
+        <li>3 property verifications/month</li>
+        <li>Basic ownership check</li>
+        <li>Tamil & English interface</li>
+        <li>Community support</li>
+      </ul>
+      <a href="#contact" class="price-btn pb-outline">Get Started Free</a>
+    </div>
+    <div class="price-card featured">
+      <div class="featured-tag">Most Popular</div>
+      <div class="price-tier">Premium</div>
+      <div class="price-amount">₹299 <span>/ month</span></div>
+      <p class="price-desc">For active property buyers and investors who need full verification power.</p>
+      <ul class="price-features">
+        <li>Unlimited verifications</li>
+        <li>AI Litigation Risk Score</li>
+        <li>Real-time dispute alerts</li>
+        <li>Visual boundary maps</li>
+        <li>Encumbrance certificate</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="#contact" class="price-btn pb-gold">Start Premium</a>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Business (B2B)</div>
+      <div class="price-amount">₹5,000 <span>/ month</span></div>
+      <p class="price-desc">For real estate agents, property lawyers, and banks handling multiple properties.</p>
+      <ul class="price-features">
+        <li>Bulk property verification</li>
+        <li>API access for integration</li>
+        <li>Advanced analytics dashboard</li>
+        <li>Dedicated account manager</li>
+        <li>Custom reports</li>
+      </ul>
+      <a href="#contact" class="price-btn pb-outline">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section fade-in">
+  <h2>Ready to Verify Safely?</h2>
+  <p>Join thousands of property buyers who trust LandGuard AI for secure land verification.</p>
+  <a href="#contact" class="btn-primary">🚀 Get Early Access — It's Free</a>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="fade-in">
+  <div class="section-tag">Contact Us</div>
+  <h2 class="section-title">Get in Touch</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>LandGuard AI</h3>
+      <p>We're building the future of land verification in India. Reach out for early access, partnerships, or any queries.</p>
+      <div class="contact-item">
+        <div class="contact-item-icon">📧</div>
+        landguardai@gmail.com
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📱</div>
+        Available on Mobile & Web
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        Neyveli, Tamil Nadu, India
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🌐</div>
+        Tamil Nadu · South India · Pan India
+      </div>
+    </div>
+    <div class="contact-form">
+      <input type="text" class="form-input" placeholder="Your Full Name">
+      <input type="email" class="form-input" placeholder="Your Email Address">
+      <input type="tel" class="form-input" placeholder="Your Phone Number">
+      <select class="form-input" style="cursor:pointer;">
+        <option value="" disabled selected>I am a...</option>
+        <option>Property Buyer</option>
+        <option>Landowner</option>
+        <option>Real Estate Agent</option>
+        <option>Property Lawyer</option>
+        <option>Bank / Financial Institution</option>
+        <option>Other</option>
+      </select>
+      <textarea class="form-input" placeholder="Your message or query..."></textarea>
+      <button class="form-submit">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>LandGuard AI</strong> — Smarter & Secure Land Verification for Every Property Buyer</p>
+  <p style="margin-top:0.5rem;">Built with ❤️ in Tamil Nadu, India · © 2025 LandGuard AI · All Rights Reserved</p>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
